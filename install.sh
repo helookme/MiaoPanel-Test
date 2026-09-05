@@ -14,11 +14,14 @@ rm -rf mp_install mp.zip
 mkdir mp_install && cd mp_install
 
 echo "[1/3] 下载安装包..."
-if curl -fsSL --connect-timeout 10 --max-time 120 -o mp.zip "$REPO/archive/refs/heads/master.zip" 2>/dev/null; then
+if curl -fSL --progress-bar --connect-timeout 10 --max-time 120 -o mp.zip "$REPO/archive/refs/heads/master.zip"; then
+  echo ""
   echo "      直连 GitHub 成功"
 else
   echo "      直连失败，改用镜像加速..."
-  curl -fsSL --max-time 120 -o mp.zip "$MIRROR/archive/refs/heads/master.zip"
+  curl -fSL --progress-bar --max-time 120 -o mp.zip "$MIRROR/archive/refs/heads/master.zip"
+  echo ""
+  echo "      镜像下载完成"
 fi
 
 echo "[2/3] 解压..."
